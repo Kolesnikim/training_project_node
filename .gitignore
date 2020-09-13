@@ -19,5 +19,16 @@
 .env.production.local
 
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.eslintrc.json
+.gitignore
+/.idea
+.prettierrc
+app.js
+controllers/
+/dev-data
+models/
+package-lock.json
+package.json
+public/
+routes/
+server.js

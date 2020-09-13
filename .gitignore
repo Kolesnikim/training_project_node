@@ -21,11 +21,11 @@
 npm-debug.log*
 .eslintrc.json
 .gitignore
-/.idea
+.idea
 .prettierrc
 app.js
 controllers/
-/dev-data
+dev-data
 models/
 package-lock.json
 package.json

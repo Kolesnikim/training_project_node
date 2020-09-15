@@ -11,7 +11,19 @@ const Tour = require('../models/tourModel');
 
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    let copyQuery = { ...req.query };
+
+    const excludedParams = ['page', 'sort', 'limit', 'fields'];
+    excludedParams.forEach(el => delete copyQuery[el]);
+
+    copyQuery = JSON
+      .stringify(copyQuery)
+      .replace(/\b(gte)|(gt)|(lte)|(lt)\b/g, match => `$${match}`);
+
+    const query = Tour.find(JSON.parse(copyQuery));
+
+    const tours = await query;
+
     res.status(200).json({
       status: 'success',
       results: tours.length,

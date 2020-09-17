@@ -1,4 +1,5 @@
 const Tour = require('../models/tourModel');
+
 class APIFeatures {
   constructor(query, queryStr) {
     this.query = query;
@@ -13,12 +14,13 @@ class APIFeatures {
     excludedParams.forEach(el => delete copyQuery[el]);
 
     // changing gte and lte params
-    copyQuery = JSON
-      .stringify(copyQuery)
-      .replace(/\b(gte)|(gt)|(lte)|(lt)\b/g, match => `$${match}`);
+    copyQuery = JSON.stringify(copyQuery).replace(
+      /\b(gte)|(gt)|(lte)|(lt)\b/g,
+      match => `$${match}`
+    );
 
     // query execution
-    this.query = Tour.find(JSON.parse(copyQuery))
+    this.query = Tour.find(JSON.parse(copyQuery));
     return this;
   }
 
@@ -29,7 +31,6 @@ class APIFeatures {
     } else {
       this.query = this.query.sort('-createdAt');
     }
-
     return this;
   }
 

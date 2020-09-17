@@ -1,29 +1,23 @@
-const fs = require('fs');
-const path = require('path');
 const Tour = require('../models/tourModel');
+const APIFeatures = require('../utils/apiFeatures');
 
-/** const tours = JSON.parse(
-  fs.readFileSync(
-    path.join(__dirname, '../', 'dev-data', 'data', 'tours-simple.json'),
-    'utf-8'
-  )
-); */
+// aliases
+exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'ratingsAverage,name,price,summary,difficulty';
+  next();
+};
 
+// get all tours
 exports.getAllTours = async (req, res) => {
   try {
-    let copyQuery = { ...req.query };
+    const features = new APIFeatures(Tour.find(), req.query).filter().sort().selectedFields().paginate();
 
-    const excludedParams = ['page', 'sort', 'limit', 'fields'];
-    excludedParams.forEach(el => delete copyQuery[el]);
 
-    copyQuery = JSON
-      .stringify(copyQuery)
-      .replace(/\b(gte)|(gt)|(lte)|(lt)\b/g, match => `$${match}`);
+    const tours = await features.query;
 
-    const query = Tour.find(JSON.parse(copyQuery));
-
-    const tours = await query;
-
+    // response to a client
     res.status(200).json({
       status: 'success',
       results: tours.length,
@@ -34,7 +28,7 @@ exports.getAllTours = async (req, res) => {
   } catch (error) {
     res.status(404).json({
       status: 'fail',
-      message: error
+      message: error.message
     });
   }
 };

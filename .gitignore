@@ -1,34 +1,14 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-.eslintrc.json
-.gitignore
+# IntelliJ project files
 .idea
-.prettierrc
-app.js
-controllers/
-dev-data
-models/
-package-lock.json
-package.json
-public/
-routes/
-server.js
+*.iml
+out
+gen
+.idea/
+
+dev-data/data/importToDB.js
+
+node_modules/
